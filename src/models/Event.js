@@ -21,7 +21,7 @@ const eventsShema = new Schema(
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: "User",
       required: true,
     },
   },
@@ -30,4 +30,4 @@ const eventsShema = new Schema(
   }
 );
 
-export default model("event", eventsShema, "Events");
+export default model("Event", eventsShema, "Events");

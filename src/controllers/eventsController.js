@@ -2,7 +2,7 @@ import saveDB from "../helpers/saveDB.js";
 import Event from "../models/Event.js";
 
 export const getEvents = async (req, res) => {
-  const events = await Event.find().populate("user", "name");
+  const events = await Event.find().populate("User", "name");
 
   res.json({
     ok: "true",
