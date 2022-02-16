@@ -4,19 +4,21 @@ import generateJwt from "../helpers/generateJwt.js";
 
 export const signUp = async (req, res) => {
   try {
-    const user = req.body;
+    const userCredentials = req.body;
 
-    if (await isSignUp(user)) {
-      return res.status(409).json({ ok: false, msg: "Email already in use" });
+    if (await isSignUp(userCredentials)) {
+      return res
+        .status(409)
+        .json({ ok: false, msg: "El correo electrónico esta en uso" });
     }
 
-    const { id } = await saveDB(user);
+    const { id, name } = await saveDB(userCredentials);
 
-    const token = generateJwt(id);
+    const token = generateJwt(id, name);
 
-    res.status(201).json({ ok: true, token });
+    res.status(201).json({ id, name, token });
   } catch (error) {
-    res.status(500).json({ ok: false, msg: "Internal error", error });
+    res.status(500).json({ msg: "Error interno", error });
   }
 };
 
@@ -24,24 +26,24 @@ export const signIn = async (req, res) => {
   try {
     const user = await isSignUp(req.body);
 
-    if (!user)
-      return res.status(401).json({
-        ok: false,
-        msg: "Email or password incorrect",
+    if (!user) {
+      return res.status(400).json({
+        msg: "Correo electrónico y/o contraseña incorrecta",
       });
+    }
+    const { id, name } = user;
+    const token = generateJwt(id, name);
 
-    const token = generateJwt(user.id);
-
-    res.json({ ok: true, token });
+    res.json({ id, name, token });
   } catch (error) {
-    res.status(500).json({ ok: false, msg: "Internal error", error });
+    res.status(500).json({ msg: "Error interno", error });
   }
 };
 
 export const renewToken = (req, res) => {
-  const { id } = req.payload;
+  const { id, name } = req.payload;
 
-  const token = generateJwt(id);
+  const token = generateJwt(id, name);
 
-  res.json({ ok: true, token });
+  res.json({ id, name, token });
 };
