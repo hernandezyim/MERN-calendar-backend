@@ -2,7 +2,7 @@ import { Router } from "express";
 
 import {
   getEvents,
-  createEvent,
+  addNewEvent,
   updateEvent,
   deleteEvent,
 } from "../controllers/eventsController.js";
@@ -17,7 +17,7 @@ const eventsRouter = Router();
 eventsRouter.use(validateToken);
 
 eventsRouter.get("/", getEvents);
-eventsRouter.post("/", validateEvent, createEvent);
+eventsRouter.post("/", validateEvent, addNewEvent);
 eventsRouter.put("/:id", validateEvent, validateId, updateEvent);
 eventsRouter.delete("/:id", validateId, deleteEvent);
 

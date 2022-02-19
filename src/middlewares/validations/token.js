@@ -7,12 +7,12 @@ const isValidToken = (token, { req }) => {
   try {
     req.payload = jwt.verify(token, process.env.JWT_SECRET_KEY);
 
-    return true;
+    return Promise.resolve();
   } catch (error) {
-    return;
+    return Promise.reject();
   }
 };
 export const validateToken = [
-  header("x-access-token").exists().notEmpty().custom(isValidToken),
+  header("x-access-token").trim().exists().notEmpty().custom(isValidToken),
   validateResult,
 ];

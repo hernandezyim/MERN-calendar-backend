@@ -16,12 +16,11 @@ const eventsShema = new Schema(
       type: String,
       required: true,
     },
-    notes: {
+    note: {
       type: String,
     },
-    user: {
+    uid: {
       type: Schema.Types.ObjectId,
-      ref: "User",
       required: true,
     },
   },

@@ -5,25 +5,34 @@ const { compareSync } = bcryptjs;
 import validateResult from "./validateResult.js";
 import User from "../../models/User.js";
 
+const isMach = (password2, { req }) => {
+  const password = req.body.password;
+
+  if (password2 !== password) return Promise.reject();
+
+  return Promise.resolve();
+};
+
 export const validateSignUp = [
-  body("name").exists().notEmpty(),
-  body("email").exists().notEmpty().isEmail(),
-  body("password").exists().notEmpty().isLength({ min: 6 }),
+  body("name").trim().exists(),
+  body("email").trim().exists().isEmail(),
+  body("password").trim().exists().isLength({ min: 6 }),
+  body("password2").trim().exists().custom(isMach),
   validateResult,
 ];
 
 export const validateSignIn = [
-  body("email").exists().notEmpty().isEmail(),
-  body("password").exists().notEmpty(),
+  body("email").exists(),
+  body("password").exists(),
   validateResult,
 ];
 
-export const isSignUp = async ({ email, password }) => {
+export const isSignUp = async (email) => {
   const user = await User.findOne({ email });
 
-  if (!user) return;
+  if (user) return user;
+};
 
-  if (!compareSync(password, user.password)) return;
-
-  return user;
+export const isPasswordEqual = (userCredentialsPassword, password) => {
+  return compareSync(userCredentialsPassword, password);
 };

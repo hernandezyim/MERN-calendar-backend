@@ -5,17 +5,12 @@ import encryptPassword from "./encryptPassword.js";
 const saveDB = async (value) => {
   let element = {};
 
-  if (value.email) {
+  if (!value.email) element = new Event(value);
+  else {
     element = new User(value);
-
     element.password = encryptPassword(value.password);
-
-    await element.save();
-  } else {
-    element = new Event(value);
-
-    await element.save();
   }
+  await element.save();
   return element;
 };
 
