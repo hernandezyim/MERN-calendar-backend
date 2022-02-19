@@ -1,4 +1,4 @@
-import express, { static as statics, json, urlencoded } from "express";
+import express from "express";
 import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
@@ -15,9 +15,9 @@ dbConnection();
 
 app.set("port", process.env.PORT || 4000);
 
-app.use(json());
-app.use(urlencoded({ extended: false }));
-app.use(statics("public"));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(express.static("public"));
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(cors());
