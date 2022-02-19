@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 
-import eventIdTransform from "../helpers/EventIdTransform.js";
+import eventIdTransform from "../helpers/eventIdTransform.js";
 import saveDB from "../helpers/saveDB.js";
 import Event from "../models/Event.js";
 
