@@ -2,7 +2,7 @@ import { body, param } from "express-validator";
 import moment from "moment";
 
 import Event from "../../models/Event.js";
-import validateResult from "./validateResult.js";
+import handleErrors from "./handleErrors.js";
 
 const isValidId = async (eventId, { req }) => {
   try {
@@ -26,10 +26,10 @@ export const validateEvent = [
   body("title").trim().exists().notEmpty(),
   body("start").trim().exists().notEmpty().custom(isValidDate),
   body("end").trim().exists().notEmpty().custom(isValidDate),
-  validateResult,
+  handleErrors,
 ];
 
 export const validateId = [
   param("id").trim().exists().notEmpty().custom(isValidId),
-  validateResult,
+  handleErrors,
 ];

@@ -1,11 +1,11 @@
 import { Router } from "express";
 
 import { renewToken, signUp, signIn } from "../controllers/authController.js";
-import { validateToken } from "../middlewares/validations/token.js";
 import {
   validateSignUp,
   validateSignIn,
-} from "../middlewares/validations/user.js";
+  validateToken,
+} from "../middlewares/validations/auth.js";
 
 const authRouter = Router();
 

@@ -12,11 +12,11 @@ export const getEvents = async (req, res) => {
 
     const newEvents = eventsDB.map((event) => eventIdTransform(event));
 
-    res.json({
+    res.send({
       events: newEvents,
     });
   } catch (error) {
-    res.status(500).json({ msg: "Error interno", error });
+    res.status(500).send({ msg: "Error interno", error });
   }
 };
 
@@ -28,9 +28,9 @@ export const addNewEvent = async (req, res) => {
     const eventDB = await saveDB(event);
     const newEvent = eventIdTransform(eventDB);
 
-    res.json({ event: newEvent });
+    res.send({ event: newEvent });
   } catch (error) {
-    res.status(500).json({ msg: "Error interno", error });
+    res.status(500).send({ msg: "Error interno", error });
   }
 };
 
@@ -44,11 +44,11 @@ export const updateEvent = async (req, res) => {
     });
     const newEvent = eventIdTransform(eventDB);
 
-    res.json({
+    res.send({
       event: newEvent,
     });
   } catch (error) {
-    res.status(500).json({ msg: "Error interno", error });
+    res.status(500).send({ msg: "Error interno", error });
   }
 };
 
@@ -56,8 +56,8 @@ export const deleteEvent = async (req, res) => {
   try {
     await Event.deleteOne({ _id: req.eventId });
 
-    res.status(200).json();
+    res.status(200).end();
   } catch (error) {
-    res.status(500).json({ msg: "Error interno", error });
+    res.status(500).send({ msg: "Error interno", error });
   }
 };
