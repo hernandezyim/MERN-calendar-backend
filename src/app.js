@@ -19,7 +19,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(helmet());
-app.use(cors());
+
+const corsOptions ={
+   origin:'*', 
+   credentials:true,           
+   optionSuccessStatus:200,
+}
+
+app.use(cors(corsOptions))
 
 app.use("/api/v_1/auth", authRouter);
 app.use("/api/v_1/events", eventsRouter);
