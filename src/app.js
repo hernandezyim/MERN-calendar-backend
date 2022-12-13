@@ -17,7 +17,6 @@ app.set("port", process.env.PORT || 4000);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(express.static("public"));
 app.use(morgan("dev"));
 app.use(helmet());
 app.use(cors());
