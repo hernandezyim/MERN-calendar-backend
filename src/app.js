@@ -26,7 +26,7 @@ const corsOptions ={
    optionSuccessStatus:200,
 }
 
-app.use(cors(corsOptions))
+app.use(cors(corsOptions));
 
 app.use("/api/v_1/auth", authRouter);
 app.use("/api/v_1/events", eventsRouter);
